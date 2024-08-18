@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer components {
+    @import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
+}
+
+
+body {
+    font-family: "Rubik", sans-serif;
+}
+
+@layer components {
+    /* sidebar css start */
+    .menu {
+        @apply w-full text-[15px] text-start flex items-center gap-x-2.5 py-[8px] px-2.5 hs-accordion-active:bg-[#EAFFF4] hs-accordion-active:text-[#69AA8A] text-gray-900 rounded-md hover:bg-[#EAFFF4] hover:text-[#69AA8A] duration-150 dark:hover:bg-[#EAFFF4] dark:text-gray-100 dark:hover:text-[#69AA8A];
+    }
+
+    .menu-icon {
+        @apply text-[19px];
+    }
+
+    .sub-menu {
+        @apply flex items-center gap-x-1 py-[6px] px-1.5 py-2 text-sm text-neutral-700 rounded-lg hover:bg-[#EAFFF4] duration-100 dark:text-neutral-400 dark:hover:text-[#69AA8A] hs-accordion-active:bg-[#EAFFF4] hs-accordion-active:text-[#69AA8A];
+    }
+
+    .sub-menu-content {
+        @apply w-full mt-[1px] overflow-hidden transition-[height] duration-300 hidden;
+    }
+
+    .sub-menu-icon {
+        @apply text-[15px] text-gray-600;
+    }
+
+
+    /* sidebar css end */
+
+
+    .card{
+        @apply w-full border-gray-300 my-[20px] bg-[#FFFFFF] space-y-[20px] dark:border-gray-600 dark:bg-[#1F2940] ;
+    }
+
+    .card-title{
+        @apply border-b border-b-gray-400 py-[13px] px-[15px] flex justify-between items-center;
+    }
+
+    .card-body{
+        @apply w-full p-[15px] h-full dark:text-gray-200;
+    } 
+
+    .btn{
+        @apply px-3 py-2  rounded-sm duration-150 flex items-center gap-[5px] text-black;
+    }
+
+
+
+    .form-group {
+        @apply w-full space-y-1;
+    }
+
+    .form-input {
+        @apply w-full border-gray-400 rounded-sm p-1.5 focus:border-[#6FD943] focus:ring-0 placeholder:text-gray-400 ;
+    }
+
+    .label {
+        @apply text-sm text-gray-500 font-semibold;
+    }
+
+    .form-error {
+        @apply text-[12px] text-red-500 px-1;
+    }
+}
+
+
+.customize-table {
+    --easy-table-header-font-size: 13px;
+}
+
+
+/* frontend css */
+
+@layer components {
+    
+}
