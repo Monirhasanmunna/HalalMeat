@@ -47,12 +47,18 @@ import {Link} from '@inertiajs/vue3';
                                     <MenuArrowIcon />
                                 </button>
 
-                                <div id="config-child" class="hs-accordion-content sub-menu-content" :class="{'block' : route().current('product.category.*') || route().current('product.brand.*') || route().current('product.unit.*')}">
+                                <div id="config-child" class="hs-accordion-content sub-menu-content" :class="{'block' : route().current('product.category.*') || route().current('product.brand.*') || route().current('product.unit.*') ||route().current('product.subCategory.*')}">
                                     <ul class="p-2 ml-[5px] border-l-2 border-[#75e5ab] space-y-2">
                                         <li>
                                             <Link :href="route('product.category.index')" class="sub-menu" :class="{'activeNav' : route().current('product.category.*')}">
                                                 <DotIcon class="sub-menu-icon" />
                                                 Category List
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link :href="route('product.subCategory.index')" class="sub-menu" :class="{'activeNav' : route().current('product.subCategory.*')}">
+                                                <DotIcon class="sub-menu-icon" />
+                                                Sub Category List
                                             </Link>
                                         </li>
                                         <li>

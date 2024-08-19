@@ -3,6 +3,7 @@
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\TaxController;
 use App\Http\Controllers\Backend\UnitController;
 use App\Http\Controllers\Frontend\CategoryController as FrontendCategoryController;
@@ -50,7 +51,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('/update/{id}', [CategoryController::class, 'update'])->name('update');
             Route::delete('/delete/{id}', [CategoryController::class, 'destroy'])->name('destroy');
         });
+
+        
+        Route::group(['as'=> 'subCategory.', 'prefix'=> 'sub-category'], function(){
+            Route::get('/', [SubCategoryController::class, 'index'])->name('index');
+            Route::get('/get-all-items', [SubCategoryController::class, 'getAllItems'])->name('allSubCategory');
+            Route::get('/get-categories', [SubCategoryController::class, 'Categories'])->name('getCategories');
+            Route::get('/create', [SubCategoryController::class, 'create'])->name('create');
+            Route::post('/store', [SubCategoryController::class, 'store'])->name('store');
+            Route::get('/edit/{id}', [SubCategoryController::class, 'edit'])->name('edit');
+            Route::post('/update/{id}', [SubCategoryController::class, 'update'])->name('update');
+            Route::delete('/delete/{id}', [SubCategoryController::class, 'destroy'])->name('destroy');
+        });
     
+
         Route::group(['as'=> 'brand.', 'prefix'=> 'brand'], function(){
             Route::get('/', [BrandController::class, 'index'])->name('index');
             Route::get('/get-all-items', [BrandController::class, 'getAllItems'])->name('allBrand');

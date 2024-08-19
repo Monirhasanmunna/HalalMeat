@@ -2,6 +2,7 @@
 import UserIcon from '@/Components/Icons/Frontend/UserIcon.vue';
 import CartIcon from '@/Components/Icons/Frontend/CartIcon.vue';
 import SearchIcon from '@/Components/Icons/Frontend/SearchIcon.vue';
+import {Link} from '@inertiajs/vue3';
 </script>
 
 
