@@ -93,7 +93,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 Route::get('/', function () {
     return Inertia::render('Frontend/Home');
-});
+})->name('home');
 
 Route::get('/products', function () {
     return Inertia::render('Frontend/Products');

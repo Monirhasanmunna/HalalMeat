@@ -50,7 +50,7 @@ function submit(){
                                 <button v-if="!CategoryStore.isLoaderOn" type="submit" class="px-3 py-2 float-end bg-green-500 text-white rounded-md hover:bg-green-600 duration-200">Add New</button>
 
                                 <button v-else type="submit"
-                                    class="px-3 py-2 float-end bg-green-500 text-white rounded-md hover:bg-green-600 duration-200 flex justify-center items-center w-[90px] bg-[#3AC18C] rounded-md float-end hover:text-white">
+                                    class="px-3 py-2 text-white hover:bg-green-600 duration-200 flex justify-center items-center w-[90px] bg-[#3AC18C] rounded-md float-end hover:text-white">
                                     <div class="animate-spin inline-block size-6 border-[3px] border-current border-t-transparent text-white rounded-full dark:text-blue-500"
                                         User="status" aria-label="loading">
                                         <span class="sr-only">Loading...</span>

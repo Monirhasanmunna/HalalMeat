@@ -6,36 +6,17 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
-
-defineProps({
-    canResetPassword: {
-        type: Boolean,
-    },
-    status: {
-        type: String,
-    },
-});
-
-const form = useForm({
-    email: '',
-    password: '',
-    remember: false,
-});
+import AuthStore from '@/store/auth';
 
 const submit = () => {
-    form.post(route('login'), {
-        onFinish: () => form.reset('password'),
-    });
+    AuthStore.login()
 };
+
 </script>
 
 <template>
     <GuestLayout>
         <Head title="Log in" />
-
-        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
-            {{ status }}
-        </div>
 
         <form @submit.prevent="submit">
             <div>
@@ -45,13 +26,13 @@ const submit = () => {
                     id="email"
                     type="email"
                     class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
+                    v-model="AuthStore.credentials.email"
                     autofocus
                     autocomplete="username"
                 />
 
-                <InputError class="mt-2" :message="form.errors.email" />
+                <span v-if="AuthStore.errors.email" class="form-error" >{{ AuthStore.errors.email[0] }}</span>
+
             </div>
 
             <div class="mt-4">
@@ -61,33 +42,31 @@ const submit = () => {
                     id="password"
                     type="password"
                     class="mt-1 block w-full"
-                    v-model="form.password"
-                    required
+                    v-model="AuthStore.credentials.password"
                     autocomplete="current-password"
                 />
 
-                <InputError class="mt-2" :message="form.errors.password" />
+                <span v-if="AuthStore.errors.password" class="form-error" >{{ AuthStore.errors.password[0] }}</span>
+
             </div>
 
             <div class="block mt-4">
                 <label class="flex items-center">
-                    <Checkbox name="remember" v-model:checked="form.remember" />
+                    <Checkbox name="remember" v-model:checked="AuthStore.credentials.remember" />
                     <span class="ms-2 text-sm text-gray-600">Remember me</span>
                 </label>
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <Link
-                    v-if="canResetPassword"
-                    :href="route('password.request')"
-                    class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                    Forgot your password?
-                </Link>
+                
+                <button v-if="!AuthStore.isLoaderOn" type="submit" class="px-3 py-2 float-end bg-green-500 text-white rounded-md hover:bg-green-600 duration-200">Login</button>
 
-                <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Log in
-                </PrimaryButton>
+                <button v-else type="submit" disabled class="px-3 py-2 w-[62px] text-white cursor-not-allowed hover:bg-green-600 duration-200 flex justify-center items-center bg-[#3AC18C] rounded-md float-end hover:text-white">
+                    <div class="animate-spin inline-block size-6 border-[3px] border-current border-t-transparent text-white rounded-full dark:text-blue-500"
+                        User="status" aria-label="loading">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </button>
             </div>
         </form>
     </GuestLayout>

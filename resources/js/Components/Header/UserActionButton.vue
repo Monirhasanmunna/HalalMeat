@@ -1,5 +1,6 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
+import AuthStore from '@/store/auth';
 </script>
 
 <template>
@@ -15,10 +16,9 @@ import { Link } from '@inertiajs/vue3';
                 href="#">
                 Profile
             </Link>
-            <Link class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm w-full text-gray-100 bg-red-500 hover:bg-red-600 focus:outline-none focus:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:bg-gray-700"
-                :href="route('logout')" method="post" type="button" as="button">
+            <button @click="AuthStore.logout" class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm w-full text-gray-100 bg-red-500 hover:bg-red-600 focus:outline-none focus:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:bg-gray-700">
                 Log Out
-            </Link>
+            </button>
         </div>
     </div>
 </template>
