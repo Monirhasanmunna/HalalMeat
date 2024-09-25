@@ -19,13 +19,18 @@ const SubCategoryStore = reactive({
     showToast : useToast().showToast,
 
     itemList : ()=>{
-        axios.get(route('product.subCategory.allSubCategory'))
-        .then(res => {
-            if(res.data.status == 200){
-                SubCategoryStore.subCategories = res.data.subCategories
-                SubCategoryStore.skeletonIsActive = false;
-            }
-        });
+        try {
+            SubCategoryStore.skeletonIsActive = true;
+            axios.get(route('product.subCategory.allSubCategory'))
+            .then(res => {
+                if(res.data.status == 200){
+                    SubCategoryStore.subCategories = res.data.subCategories
+                    SubCategoryStore.skeletonIsActive = false;
+                }
+            });
+        } catch (error) {
+            SubCategoryStore.showToast('Opps something went wrong', 'error')
+        }
     },
 
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Traits\ImageSaver;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
@@ -10,7 +11,6 @@ use App\Models\Tax;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Http\Traits\generateUniqueSKU;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
@@ -19,48 +19,34 @@ use Picqer\Barcode\BarcodeGeneratorPNG;
 
 class ProductController extends Controller
 {
-    use generateUniqueSKU;
+    use ImageSaver;
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        $search = $request->input('search');
-        $count = $request->input('count');
-
-        $products = Product::with(['category', 'tax', 'brand', 'unit', 'images', 'details'])
-                    ->orderByDesc('id')
-                    ->Search($search)
-                    ->paginate($count)
-                    ->withQueryString();
-
-        // return $products;
-        
-        return Inertia::render('Product/Index',[
-            'products' => $products,
-            'filters' => ['search' => $search , 'count' => $count]
-        ]);
-
+        return Inertia::render('Product/Index');
     }
 
-    /**
-     * Show the form for getAllData a new resource.
-     */
-    public function getAllData()
+
+    public function getAllItems()
     {
         $categories = Category::where('status', true)->get();
         $brands = Brand::where('status', true)->get();
         $units = Unit::where('status', true)->get();
-        $taxes = Tax::where('status', true)->get(); 
 
+        $products = Product::with(['category','brand', 'unit'])->orderByDesc('id')->get();
 
         return response()->json([
+            'status' => 200,
+            'products' => $products,
             'categories' => $categories,
             'brands' => $brands,
-            'units' => $units,
-            'taxes' => $taxes
+            'units' => $units
         ]);
     }
+
+
 
     /**
      * Store a newly created resource in storage.
@@ -73,51 +59,33 @@ class ProductController extends Controller
             'category_id' => 'required',
             'brand_id' => 'required',
             'unit_id' => 'required',
-            'tax_id' => 'required',
-            'images.*' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:4096',
             'purchase_price' => 'required',
             'selling_price' => 'required',
         ]);
 
 
-        $product = new Product();
-        $product->name = $request->name;
-        $product->barcode = $this->generateUniqueSKU();
-        $product->category_id = $request->category_id;
-        $product->brand_id = $request->brand_id;
-        $product->unit_id = $request->unit_id;
-        $product->tax_id = $request->tax_id;
-        $product->save();
-
-
-        $generator = new BarcodeGeneratorPNG();
-        $barcode = $generator->getBarcode($product->barcode, $generator::TYPE_CODE_128);
-        $barcode_path = 'uploads/barcodes/' . $product->barcode . '.png';
-        Storage::disk('public')->put($barcode_path, $barcode);
-        $product->barcode_path = $barcode_path;
-        $product->save();
-
-
-        $product->details()->create([
-            'product_id' => $product->id,
+        $product = Product::create([
+            'name' => $request->name,
+            'category_id' => $request->category_id,
+            'brand_id' => $request->brand_id,
+            'unit_id' => $request->unit_id,
             'description' => $request->description,
             'purchase_price' => $request->purchase_price,
             'selling_price' => $request->selling_price,
+            'quantity' => 0
         ]);
 
 
-        foreach ($request->images as $key => $image) {
-            $newFileName   = $this->generateUniqueSKU() . '.' . $image->getClientOriginalExtension();
-            $path = $image->storeAs('uploads/products', $newFileName, 'public');
-
-            $product->images()->create([
-                'product_id' => $product->id,
-                'image' => 'uploads/products/'.$newFileName
-            ]);
+        if($request->hasFile('image')) {
+            $this->upload_file($request->file('image'), $product, 'image', 'product');
         }
 
 
-        return Redirect::back();
+        return response()->json([
+            'status' => 200,
+            'product' => $product
+        ]);
     }
 
     /**
@@ -133,8 +101,11 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        $product = Product::with(['category', 'tax', 'brand', 'unit', 'images', 'details'])->find($id);
-        return response()->json($product);
+        $product = Product::with(['category', 'brand', 'unit'])->find($id);
+        return response()->json([
+            'status' => 200,
+            'product' => $product
+        ]);
     }
 
     /**
@@ -145,58 +116,40 @@ class ProductController extends Controller
         // dd($request->all());
 
         $request->validate([
-            'name' => 'required|unique:products,name,'. $id,
+            'name' => 'required|unique:products,name,'.$id,
             'description' => 'required',
             'category_id' => 'required',
             'brand_id' => 'required',
             'unit_id' => 'required',
-            'tax_id' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:4096',
             'purchase_price' => 'required',
             'selling_price' => 'required',
         ]);
 
 
         $product = Product::find($id);
-        $product->name = $request->name;
-        $product->category_id = $request->category_id;
-        $product->brand_id = $request->brand_id;
-        $product->unit_id = $request->unit_id;
-        $product->tax_id = $request->tax_id;
-        $product->save();
 
-
-        $product->details()->update([
-            'product_id' => $product->id,
+        $product->update([
+            'name' => $request->name,
+            'category_id' => $request->category_id,
+            'brand_id' => $request->brand_id,
+            'unit_id' => $request->unit_id,
             'description' => $request->description,
             'purchase_price' => $request->purchase_price,
             'selling_price' => $request->selling_price,
-            'quantity' => $request->quantity
+            'quantity' => 0
         ]);
 
 
-        if($request->hasFile('images')) { 
-
-            foreach ($product->images as $file) {
-                if(file_exists($file->image)){
-                     unlink($file->image);
-                }
-               
-                $file->delete();
-            }
-
-            foreach ($request->images as $key => $image) {
-                $newFileName   = $this->generateUniqueSKU().'.' . $image->getClientOriginalExtension();
-                $path = $image->storeAs('uploads/products', $newFileName, 'public');
-    
-                $product->images()->create([
-                    'product_id' => $product->id,
-                    'image' => 'uploads/products/'.$newFileName
-                ]);
-            }
+        if($request->hasFile('image')) {
+            $this->upload_file($request->file('image'), $product, 'image', 'product');
         }
 
 
-        return Redirect::back();
+        return response()->json([
+            'status' => 200,
+            'product' => $product
+        ]);
     }
 
     /**
@@ -206,17 +159,14 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
 
-        if ('storage/'.$product->barcode_path) {
-            unlink(public_path('storage/'.$product->barcode_path));
-        }
-
-        // Delete the associated images
-        foreach ($product->images as $image) {
-            if ('storage/'.$image->image) {
-                unlink(public_path('storage/'.$image->image));
-            }
+        if ($product->image) {
+            unlink(public_path($product->image));
         }
 
         $product->delete();
+
+        return response()->json([
+            'status' => 200
+        ]);
     }
 }

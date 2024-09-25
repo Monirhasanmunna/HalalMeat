@@ -18,13 +18,18 @@ const UnitStore = reactive({
     showToast : useToast().showToast,
 
     itemList : ()=>{
-        axios.get(route('product.unit.allUnits'))
-        .then(res => {
-            if(res.data.status == 200){
-                UnitStore.units = res.data.units
-                UnitStore.skeletonIsActive = false;
-            }
-        });
+        try {
+            UnitStore.skeletonIsActive = true;
+            axios.get(route('product.unit.allUnits'))
+            .then(res => {
+                if(res.data.status == 200){
+                    UnitStore.units = res.data.units
+                    UnitStore.skeletonIsActive = false;
+                }
+            });
+        } catch (error) {
+            UnitStore.showToast('Opps something went wrong', 'error')
+        }
     },
 
 

@@ -18,13 +18,18 @@ const BrandStore = reactive({
     showToast : useToast().showToast,
 
     itemList : ()=>{
-        axios.get(route('product.brand.allBrand'))
-        .then(res => {
-            if(res.data.status == 200){
-                BrandStore.brands = res.data.brands
-                BrandStore.skeletonIsActive = false;
-            }
-        });
+        BrandStore.skeletonIsActive = true;
+        try {
+            axios.get(route('product.brand.allBrand'))
+            .then(res => {
+                if(res.data.status == 200){
+                    BrandStore.brands = res.data.brands
+                    BrandStore.skeletonIsActive = false;
+                }
+            });
+        } catch (error) {
+            BrandStore.showToast('Opps something went wrong', 'error')
+        }
     },
 
 

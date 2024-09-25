@@ -11,8 +11,6 @@ import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 import Vue3EasyDataTable from 'vue3-easy-data-table';
 import 'vue3-easy-data-table/dist/style.css';
 
-import VueSelect  from "vue-select";
-
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 
@@ -24,10 +22,7 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue)
             .component('DataTable', Vue3EasyDataTable)
-            .component("Select", VueSelect)
             .mount(el);
     },
-    progress: {
-        color: '#4B5563',
-    },
+    progress: false,
 });

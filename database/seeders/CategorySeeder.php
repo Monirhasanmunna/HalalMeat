@@ -15,17 +15,16 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         $categories = [
-            ['name' => 'Pharmacy', 'type' => 'featured'], 
-            ['name' => 'Organic', 'type' => 'non-featured'],
-            ['name' => 'Cosmetics', 'type' => 'featured'], 
-            ['name' => 'Grocery', 'type' => 'non-featured'],
+            ['name' => 'Pharmacy'], 
+            ['name' => 'Organic'],
+            ['name' => 'Cosmetics'], 
+            ['name' => 'Grocery'],
         ];
 
         foreach ($categories as $key => $category) {
             Category::updateOrCreate([
                 'name' => $category['name'],
                 'slug' => Str::slug($category['name']),
-                'type' => $category['type']
             ]);
         }
     }

@@ -18,7 +18,6 @@ class DatabaseSeeder extends Seeder
             SubCategorySeeder::class,
             BrandSeeder::class,
             UnitSeeder::class,
-            TaxSeeder::class,
         ]);
     }
 }

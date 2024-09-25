@@ -10,34 +10,17 @@ class Product extends Model
     
     use HasFactory;
 
-    protected $fillable = [
-        'id', 
-        'name', 
-        'category_id', 
-        'brand_id', 
-        'unit_id', 
-        'tax_id', 
-        'status',
-        'barcode',
-        'barcode_path',
-    ];
+    protected $guarded = ['id'];
 
 
-    protected $appends = ['barcodeImg'];
+    protected $appends = ['src'];
 
 
-    public function getBarcodeImgAttribute()
+    public function getSrcAttribute()
     {
-        return asset('storage/'.$this->barcode_path);
+        return asset($this->image);
     }
 
-
-    public function scopeSearch($query, $search)
-    {
-        return $query->where('name', 'like', '%' . $search . '%')
-                     ->orWhere('barcode', 'like', '%' . $search . '%');
-    }
-    
     
     public function category()
     {
@@ -54,18 +37,4 @@ class Product extends Model
         return $this->belongsTo(Unit::class);
     }
 
-    public function tax()
-    {
-        return $this->belongsTo(Tax::class);
-    }
-
-    public function details()
-    {
-        return $this->hasOne(ProductDetails::class);
-    }
-
-    public function images()
-    {
-        return $this->hasMany(ProductImage::class);
-    }
 }

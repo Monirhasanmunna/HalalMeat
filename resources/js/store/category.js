@@ -18,13 +18,18 @@ const CategoryStore = reactive({
     showToast : useToast().showToast,
 
     itemList : ()=>{
-        axios.get(route('product.category.allCategory'))
-        .then(res => {
-            if(res.data.status == 200){
-                CategoryStore.categories = res.data.categories
-                CategoryStore.skeletonIsActive = false;
-            }
-        });
+        try {
+            CategoryStore.skeletonIsActive = true;
+            axios.get(route('product.category.allCategory'))
+            .then(res => {
+                if(res.data.status == 200){
+                    CategoryStore.categories = res.data.categories
+                    CategoryStore.skeletonIsActive = false;
+                }
+            });
+        } catch (error) {
+            CategoryStore.showToast('Opps something went wrong', 'error')
+        }
     },
 
 

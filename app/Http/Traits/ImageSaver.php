@@ -33,9 +33,40 @@ trait ImageSaver
 
             // <!-- update file name to database -->
             $model->$fieldName = $directory . $newFileName;
+            
             $model->save();
         }
     }
+
+
+
+    // <!-- upload multiple file -->
+    public function uploadMultipleFile($file, $model, $modelIdField, $nameFiled, $basePath)
+    {
+
+        // <!-- upload file -->
+        if ($file) {
+
+            // <!-- delete file if exist -->
+            if (file_exists($model->$nameFiled)) {
+                unlink($model->$nameFiled);
+            }
+
+            // <!-- create unique file name -->
+            $newFileName   = time() . '.' . $file->getClientOriginalExtension();
+
+            // <!-- create upload directory -->
+            $directory   = 'uploads/' . $basePath . '/';
+
+            // <!-- create store file to directory -->
+            $file->move($directory, $newFileName);
+
+            $model->$modelIdField = $model->id;
+            $model->$nameFiled = $directory . $newFileName;
+            $model->save();
+        }
+    }
+
 
 
     public function uploadFileWithResize($file, $model, $database_field_name, $basePath,$width,$height)

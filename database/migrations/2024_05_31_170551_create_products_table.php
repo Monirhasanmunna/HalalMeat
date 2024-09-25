@@ -16,10 +16,12 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
             $table->foreignId('brand_id')->constrained('brands')->onDelete('cascade');
             $table->foreignId('unit_id')->constrained('units')->onDelete('cascade');
-            $table->foreignId('tax_id')->constrained('taxes')->onDelete('cascade');
-            $table->unsignedBigInteger('barcode')->unique();
-            $table->string('barcode_path')->unique()->nullable();
             $table->string('name');
+            $table->text('description')->nullable();
+            $table->string('purchase_price');
+            $table->string('selling_price');
+            $table->bigInteger('quantity')->default(0);
+            $table->string('image')->nullable();
             $table->boolean('status')->default(true);
             $table->timestamps();
         });

@@ -19,7 +19,10 @@
         "vue": "^3.4.0"
     },
     "dependencies": {
+        "@ckeditor/ckeditor5-vue": "^7.0.0",
         "@vueup/vue-quill": "^1.2.0",
+        "ckeditor5": "^43.1.0",
+        "ckeditor5-premium-features": "^43.1.0",
         "izitoast": "^1.4.0",
         "lodash": "^4.17.21",
         "preline": "^2.0.3",

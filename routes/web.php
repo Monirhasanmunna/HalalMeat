@@ -32,16 +32,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::group(['as'=> 'product.', 'prefix'=> 'product'], function(){
         Route::get('/', [ProductController::class, 'index'])->name('index');
+        Route::get('/get-all-items', [ProductController::class, 'getAllItems'])->name('allProducts');
         Route::get('/create', [ProductController::class, 'create'])->name('create');
         Route::post('/store', [ProductController::class, 'store'])->name('store');
         Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('edit');
-        Route::put('/update/{id}', [ProductController::class, 'update'])->name('update');
+        Route::post('/update/{id}', [ProductController::class, 'update'])->name('update');
         Route::delete('/delete/{id}', [ProductController::class, 'destroy'])->name('destroy');
 
-        // ajax route
-        Route::get('/get-all-data', [ProductController::class, 'getAllData'])->name('getAllData');
-
-
+        
         Route::group(['as'=> 'category.', 'prefix'=> 'category'], function(){
             Route::get('/', [CategoryController::class, 'index'])->name('index');
             Route::get('/get-all-items', [CategoryController::class, 'getAllItems'])->name('allCategory');
