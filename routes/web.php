@@ -7,6 +7,7 @@ use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\TaxController;
 use App\Http\Controllers\Backend\UnitController;
 use App\Http\Controllers\Frontend\Auth\CustomerAuthenticationController;
+use App\Http\Controllers\Frontend\Auth\CustomerRegistrationController;
 use App\Http\Controllers\Frontend\CategoryController as FrontendCategoryController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -88,8 +89,21 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 
+
 // forntend routes
-Route::get('auth/login', [CustomerAuthenticationController::class, 'index'])->name('customer.login');
+Route::group(['as'=> 'customer.', 'prefix'=> 'auth'], function(){
+    Route::get('login', [CustomerAuthenticationController::class, 'index'])->name('login');
+    Route::post('login/submit', [CustomerAuthenticationController::class, 'login'])->name('login.submit');
+    Route::get('logout', [CustomerAuthenticationController::class, 'logout'])->name('login.logout');
+    
+    Route::get('register', [CustomerRegistrationController::class, 'register'])->name('register');
+    Route::get('register/submit', [CustomerRegistrationController::class, 'store'])->name('store');
+});
+
+
+Route::group(['as'=> 'customer.', 'prefix'=> 'customer', 'middleware' => ['customer.auth']], function(){
+    Route::get('dashboard', [CustomerAuthenticationController::class, 'dashboard'])->name('dashboard');
+});
 
 
 Route::get('/', function () {
