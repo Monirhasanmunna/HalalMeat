@@ -20,7 +20,6 @@ const submit = () => {
 
 </script>
 
-
 <template>
     <Head title="Halal Meat | Login" />
 
@@ -32,7 +31,7 @@ const submit = () => {
         <main class="h-full flex flex-col justify-between">
             <div class="h-full container flex items-center justify-center">
                     <div class="bg-white border border-gray-300 rounded-xl shadow-sm">
-                        <div class="p-4 sm:p-7 w-[400px]">
+                        <div class="p-4 sm:p-7 w-full sm:w-[400px]">
                             <div class="text-center">
                                 <h1 class="block text-2xl font-bold text-gray-800 dark:text-white">Registration</h1>
                             </div>
@@ -46,7 +45,7 @@ const submit = () => {
                                             <div class="relative">
                                             <input type="text" id="name" v-model="form.name" name="name" class="py-3 px-4 block w-full border-gray-400 rounded-md text-sm focus:ring-0" >
 
-                                            <span v-if="form.errors.name" class="form-error" >{{ form.errors.name }}</span>
+                                            <span v-if="form.errors.name" class="form-error font-semibold" >{{ form.errors.name }}</span>
                                             </div>
                                         </div>
 
@@ -55,7 +54,7 @@ const submit = () => {
                                             <div class="relative">
                                             <input type="email" id="email" v-model="form.email" name="email" class="py-3 px-4 block w-full border-gray-400 rounded-md text-sm focus:ring-0" >
 
-                                            <span v-if="form.errors.email" class="form-error" >{{ form.errors.email }}</span>
+                                            <span v-if="form.errors.email" class="form-error font-semibold" >{{ form.errors.email }}</span>
                                             </div>
                                         </div>
 
@@ -64,7 +63,7 @@ const submit = () => {
                                             <div class="relative">
                                             <input type="number" id="number" v-model="form.number" name="number" class="py-3 px-4 block w-full border-gray-400 rounded-md text-sm focus:ring-0" >
 
-                                            <span v-if="form.errors.number" class="form-error" >{{ form.errors.number }}</span>
+                                            <span v-if="form.errors.number" class="form-error font-semibold" >{{ form.errors.number }}</span>
                                             </div>
                                         </div>
 
@@ -74,7 +73,7 @@ const submit = () => {
                                             <div class="relative">
                                             <input type="text" id="address" v-model="form.address" name="address" class="py-3 px-4 block w-full border-gray-400 rounded-md text-sm focus:ring-0" >
 
-                                            <span v-if="form.errors.address" class="form-error" >{{ form.errors.address }}</span>
+                                            <span v-if="form.errors.address" class="form-error font-semibold" >{{ form.errors.address }}</span>
                                             </div>
                                         </div>
 
@@ -89,7 +88,7 @@ const submit = () => {
                                                 <option value="other">Other</option>
                                             </select>
 
-                                            <span v-if="form.errors.gender" class="form-error" >{{ form.errors.gender }}</span>
+                                            <span v-if="form.errors.gender" class="form-error font-semibold" >{{ form.errors.gender }}</span>
                                             </div>
                                         </div>
 

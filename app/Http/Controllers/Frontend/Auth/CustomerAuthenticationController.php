@@ -15,7 +15,10 @@ class CustomerAuthenticationController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Frontend/Auth/Login');
+        $auth = Auth::guard('customer')->user();
+        return Inertia::render('Frontend/Auth/Login', [
+            'auth' => $auth
+        ]);
     }
 
     /**
@@ -42,8 +45,7 @@ class CustomerAuthenticationController extends Controller
      */
     public function dashboard()
     {
-        // Auth::guard('customer');
-        dd(Auth::guard('customer')->user()->name);
+        return to_route('customer.login');
     }
 
     /**

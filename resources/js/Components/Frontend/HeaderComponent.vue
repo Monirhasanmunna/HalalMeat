@@ -2,7 +2,13 @@
 import UserIcon from '@/Components/Icons/Frontend/UserIcon.vue';
 import CartIcon from '@/Components/Icons/Frontend/CartIcon.vue';
 import SearchIcon from '@/Components/Icons/Frontend/SearchIcon.vue';
-import {Link} from '@inertiajs/vue3';
+import {Link, usePage} from '@inertiajs/vue3';
+import { computed } from 'vue';
+
+const page = usePage();
+
+const authuser = computed(() => page.props.customer);
+
 </script>
 
 
@@ -26,7 +32,6 @@ import {Link} from '@inertiajs/vue3';
                                     <SearchIcon />
                                 </button>
                             </div>
-
                         </div>
 
                         <div class="flex items-center gap-5">
@@ -88,7 +93,7 @@ import {Link} from '@inertiajs/vue3';
                                 </div>
                             </div>
 
-                            <Link :href="route('customer.login')" class="singin hover:border-yellow-400 duration-150 cursor-pointer flex gap-2 items-center border border-gray-100 px-2 py-1 text-gray-100">
+                            <Link v-if="!authuser" :href="route('customer.login')" class="singin hover:border-yellow-400 duration-150 cursor-pointer flex gap-2 items-center border border-gray-100 px-2 py-1 text-gray-100">
                                 <UserIcon class="text-yellow-400 text-[19px]" />
                                 <span>Sign In</span>
                             </Link>

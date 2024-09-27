@@ -97,7 +97,7 @@ Route::group(['as'=> 'customer.', 'prefix'=> 'auth'], function(){
     Route::get('logout', [CustomerAuthenticationController::class, 'logout'])->name('login.logout');
     
     Route::get('register', [CustomerRegistrationController::class, 'register'])->name('register');
-    Route::get('register/submit', [CustomerRegistrationController::class, 'store'])->name('store');
+    Route::post('register/submit', [CustomerRegistrationController::class, 'store'])->name('register.store');
 });
 
 

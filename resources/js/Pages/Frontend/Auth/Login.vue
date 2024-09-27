@@ -3,7 +3,6 @@ import HeaderComponent from '@/Components/Frontend/HeaderComponent.vue';
 import FooterSection from '@/Components/Frontend/FooterSection.vue';
 import { Head, useForm, Link } from '@inertiajs/vue3';
 
-
 const form = useForm({
     number: '',
 });
@@ -42,7 +41,7 @@ const submit = () => {
                                             <div class="relative">
                                             <input type="number" id="number" v-model="form.number" name="number" class="py-3 px-4 block w-full border-gray-400 rounded-md text-sm focus:ring-0" >
 
-                                            <span v-if="form.errors.number" class="form-error" >{{ form.errors.number }}</span>
+                                            <span v-if="form.errors.number" class="form-error font-semibold" >{{ form.errors.number }}</span>
                                             </div>
                                         </div>
 
