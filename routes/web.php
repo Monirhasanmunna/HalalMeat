@@ -6,6 +6,7 @@ use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\TaxController;
 use App\Http\Controllers\Backend\UnitController;
+use App\Http\Controllers\Frontend\Auth\CustomerAuthenticationController;
 use App\Http\Controllers\Frontend\CategoryController as FrontendCategoryController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -88,6 +89,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
 // forntend routes
+Route::get('auth/login', [CustomerAuthenticationController::class, 'index'])->name('customer.login');
+
 
 Route::get('/', function () {
     return Inertia::render('Frontend/Home');

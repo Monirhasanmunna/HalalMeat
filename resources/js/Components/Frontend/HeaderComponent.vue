@@ -88,7 +88,7 @@ import {Link} from '@inertiajs/vue3';
                                 </div>
                             </div>
 
-                            <Link :href="route('login')" class="singin hover:border-yellow-400 duration-150 cursor-pointer flex gap-2 items-center border border-gray-100 px-2 py-1 text-gray-100">
+                            <Link :href="route('customer.login')" class="singin hover:border-yellow-400 duration-150 cursor-pointer flex gap-2 items-center border border-gray-100 px-2 py-1 text-gray-100">
                                 <UserIcon class="text-yellow-400 text-[19px]" />
                                 <span>Sign In</span>
                             </Link>
