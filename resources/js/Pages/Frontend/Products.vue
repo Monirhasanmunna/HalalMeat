@@ -1,7 +1,7 @@
 <script setup>
 import HeaderComponent from '@/Components/Frontend/HeaderComponent.vue';
 import CategorySliderComponent from '@/Components/Frontend/CategorySliderComponent.vue';
-import FooterSection from '@/Components/Frontend/FooterSection.vue';
+import FooterSection from '@/Components/Frontend/FooterComponent.vue';
 import { Head } from '@inertiajs/vue3';
 </script>
 

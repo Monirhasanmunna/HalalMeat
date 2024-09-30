@@ -18,7 +18,7 @@ const authuser = computed(() => page.props.customer);
                 <div class="container p-3">
                     <div class="flex justify-between items-center">
                         <div class="logo w-[80px]">
-                            <img class="w-full shadow" src="/image/logo/logo.png" alt="">
+                           <Link :href="route('home')" ><img class="w-full shadow" src="/image/logo/logo.png" alt=""></Link> 
                         </div>
 
                         <div class="search hidden md:block md:w-[300px]">
@@ -101,5 +101,5 @@ const authuser = computed(() => page.props.customer);
                     </div>
                 </div>
             </div>
-        </header>
+    </header>
 </template>

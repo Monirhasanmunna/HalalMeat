@@ -6,9 +6,9 @@
     import 'vue3-carousel/dist/carousel.css'
     import { Carousel, Slide} from 'vue3-carousel'
     
-    import HeaderComponent from '@/Components/Frontend/HeaderComponent.vue';
+    import MasterLayout from '@/Layouts/Frontend/MasterLayout.vue';
     import CategorySliderComponent from '@/Components/Frontend/CategorySliderComponent.vue';
-    import FooterSection from '@/Components/Frontend/FooterSection.vue';
+
 
     const myCarousel = ref(null)
 
@@ -60,10 +60,7 @@
 
     <Head title="Halal Meat" />
 
-    <div class="w-full">
-        <!-- header section start -->
-        <HeaderComponent class="fixed" />
-        <!-- header section ends -->
+    <MasterLayout headerClass="fixed" >
         <main>
             <section class="main_section_banner w-full h-[450px] bg-no-repeat bg-cover"
                 style="background-image: url('/image/main_cover.png')">
@@ -279,10 +276,8 @@
                     <img class="w-full h-full bg-cover" src="/image/bg_overlay_right.png" alt="">
                 </div>
             </section>
-
-            <FooterSection/>
         </main>
-    </div>
+    </MasterLayout>
 </template>
 
 <style scoped>

@@ -1,6 +1,5 @@
 <script setup>
-import HeaderComponent from '@/Components/Frontend/HeaderComponent.vue';
-import FooterSection from '@/Components/Frontend/FooterSection.vue';
+import MasterLayout from '@/Layouts/Frontend/MasterLayout.vue';
 import { Head, useForm, Link } from '@inertiajs/vue3';
 
 
@@ -21,16 +20,12 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Halal Meat | Login" />
+    <Head title="Halal Meat | Registration" />
 
-    <div class="w-full h-screen">
-        <!-- header section start -->
-            <HeaderComponent />
-        <!-- header section ends -->
-
-        <main class="h-full flex flex-col justify-between">
-            <div class="h-full container flex items-center justify-center">
-                    <div class="bg-white border border-gray-300 rounded-xl shadow-sm">
+    <MasterLayout>
+        <main class="min-h-[60vh] flex flex-col justify-between">
+            <div class="h-full container flex items-center justify-center p-3">
+                    <div class="bg-white border border-gray-300 rounded-sm shadow-sm">
                         <div class="p-4 sm:p-7 w-full sm:w-[400px]">
                             <div class="text-center">
                                 <h1 class="block text-2xl font-bold text-gray-800 dark:text-white">Registration</h1>
@@ -110,10 +105,6 @@ const submit = () => {
                         </div>
                     </div>
                 </div>
-
-            <!-- foter section starts -->
-             <FooterSection/>
-            <!-- foter section ends -->
         </main>
-    </div>
+    </MasterLayout>
 </template>
