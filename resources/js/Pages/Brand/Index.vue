@@ -24,9 +24,7 @@ import TableSkeleton from '@/Components/Backend/TableSkeleton.vue';
         ]
     }
 
-
     onMounted(()=> BrandStore.itemList())
-
 
     const selectAndSearch = reactive({
         searchValue : "",
@@ -43,7 +41,7 @@ import TableSkeleton from '@/Components/Backend/TableSkeleton.vue';
 </script>
 
 <template>
-    <Head title="Category List" />
+    <Head title="Brand List" />
     <MasterLayout>
         <div class="w-full px-4 flex justify-between items-center bg-[#F9F9F9] dark:bg-[#151E32]">
             <BreadcrumbComponent :breadcrumb="breadcrumb" />
